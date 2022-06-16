@@ -602,7 +602,7 @@ class FormSubmission {
     this.mustRedirect = mustRedirect;
   }
   static confirmMethod(message, element) {
-    return confirm(message);
+    return Promise.resolve(confirm(message));
   }
   get method() {
     var _a;
@@ -640,7 +640,7 @@ class FormSubmission {
   async start() {
     const {initialized: initialized, requesting: requesting} = FormSubmissionState;
     if (this.needsConfirmation) {
-      const answer = FormSubmission.confirmMethod(this.confirmationMessage, this.formElement);
+      const answer = await FormSubmission.confirmMethod(this.confirmationMessage, this.formElement);
       if (!answer) {
         return;
       }
